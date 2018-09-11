@@ -19,23 +19,28 @@ TRAINING_STEPS = 5000
 MODEL_SAVE_PATH = "model/"
 MODEL_NAME = "model.ckpt"
 
+var_list = []
+
 def get_weight_variable(shape):
-    weights = tf.Variable(tf.truncated_normal(shape, stddev=0.1), name="weights")
+    weights = tf.get_variable("weights", shape, initializer=tf.truncated_normal_initializer(stddev=0.1))
     return weights
 
+def get_biases_variable(shape):
+    biases = tf.get_variable("biases", shape, initializer=tf.constant_initializer(0.0))
+    return biases
 
 def inference(input_tensor):
     with tf.variable_scope('layer1'):
         weights = get_weight_variable([INPUT_NODE, LAYER1_NODE])
-        biases = tf.Variable(tf.constant(0.0, shape=[LAYER1_NODE]), name="biases")
+        biases = get_biases_variable([LAYER1_NODE])
         layer1 = tf.nn.relu(tf.matmul(input_tensor, weights) + biases)
     with tf.variable_scope('layer2'):
         weights = get_weight_variable([LAYER1_NODE, LAYER2_NODE])
-        biases = tf.Variable(tf.constant(0.0, shape=[LAYER2_NODE]), name="biases")
+        biases = get_biases_variable([LAYER2_NODE])
         layer2 = tf.nn.relu(tf.matmul(layer1, weights) + biases)
     with tf.variable_scope('layer3'):
         weights = get_weight_variable([LAYER2_NODE, OUTPUT_NODE])
-        biases = tf.Variable(tf.constant(0.0, shape=[OUTPUT_NODE]), name="biases")
+        biases = get_biases_variable([OUTPUT_NODE])
         layer3 = tf.matmul(layer2, weights) + biases
     return layer3
 
