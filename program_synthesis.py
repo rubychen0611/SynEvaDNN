@@ -4,7 +4,6 @@ import knowledge_program as kp
 import gen_ML_model as ml
 from sklearn import svm
 from sklearn.externals import joblib
-import pickle
 from tensorflow.examples.tutorials.mnist import input_data
 
 inputs_file_name = 'LL_trainingdata/inputs.txt'
@@ -13,6 +12,7 @@ l2_outputs_file_name = 'LL_trainingdata/layer_2_outputs.txt'
 outputs_file_name = 'LL_trainingdata/outputs.txt'
 
 def load_image_set(mnist):
+    X_train = np.vstack([img.reshape(-1, ) for img in mnist.train.images])
     X_train = np.vstack([img.reshape(-1, ) for img in mnist.train.images])
     np.savetxt(inputs_file_name, X_train, "%.8f", ',')
 
@@ -109,7 +109,7 @@ def train_logic_learners(mnist):
 
 def main(argv=None):
     mnist = input_data.read_data_sets("MNIST_data", one_hot=True)
-    training_data_size = mnist.test.num_examples
+    # training_data_size = mnist.test.num_examples
     # 生成每个神经元的输入和输出数据 (可能没用)
     # gen_logic_learner_trainset(mnist)
 

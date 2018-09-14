@@ -3,12 +3,12 @@ from tensorflow.examples.tutorials.mnist import input_data
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
-INPUT_NODE = 784  # 输入节点(28*28)
-OUTPUT_NODE = 10  # 输出节点
+# 模型相关的参数
+INPUT_NODE = 784  # 输入节点数(28*28)
+OUTPUT_NODE = 10  # 输出节点数
 LAYER1_NODE = 20  # 隐藏层1节点数
 LAYER2_NODE = 20  # 隐藏层2节点数
 
-# 模型相关的参数
 # LEARNING_RATE_BASE = 0.8
 # LEARNING_RATE_DECAY = 0.99
 # REGULARAZTION_RATE = 0.0001
