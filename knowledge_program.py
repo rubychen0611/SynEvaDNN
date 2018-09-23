@@ -1,6 +1,12 @@
+import os
+
 import tensorflow as tf
+import numpy as np
 from tensorflow.examples.tutorials.mnist import input_data
 import gen_ML_model as ml
+
+# 预测中间结果保存目录
+knowledge_outputs_dir = 'predict/knowledge_outputs/'
 
 def get_variables():
     '''
@@ -20,21 +26,26 @@ def load_model(sess):
     saver.restore(sess, 'model/model.ckpt')
 
 
-def inference(graph, input_tensor):
+def inference(graph, input_tensor, sess, test_feed):
     '''
     计算前向传播结果
     '''
-    layer = input_tensor
+    cur_layer = input_tensor
     for i in range(1, ml.HIDDEN_LAYER_NUM + 1):
         layer_str = 'hidden_layer_%d' % i
         w = graph.get_tensor_by_name(layer_str + '/weights:0')
         b = graph.get_tensor_by_name(layer_str + '/biases:0')
-        layer = tf.nn.relu(tf.matmul(layer, w) + b)
+        cur_layer = tf.nn.relu(tf.matmul(cur_layer, w) + b)
+        cur_layer_np = sess.run(cur_layer, feed_dict=test_feed)
+        np.savetxt(os.path.join(knowledge_outputs_dir, 'hidden_layer_'+str(i)), cur_layer_np, "%.8f", ',')
 
     w = graph.get_tensor_by_name('output_layer/weights:0')
     b = graph.get_tensor_by_name('output_layer/biases:0')
-    y = tf.matmul(layer, w) + b
-    return y
+    cur_layer = tf.matmul(cur_layer, w) + b
+    cur_layer_np = sess.run(cur_layer, feed_dict=test_feed)
+    np.savetxt(os.path.join(knowledge_outputs_dir, 'final_outputs'), cur_layer_np, "%.8f", ',')
+
+    return cur_layer
 
 
 def eval_accuracy(testset):
@@ -47,7 +58,7 @@ def eval_accuracy(testset):
         x = graph.get_tensor_by_name("x-input:0")
         y_ = graph.get_tensor_by_name("y-input:0")
         test_feed = {x: testset.images, y_: testset.labels}
-        y = inference(graph, x)
+        y = inference(graph, x, sess, test_feed)
         accuracy = ml.calc_accuracy(y, y_)
         accuracy_score = sess.run(accuracy, feed_dict=test_feed)
         return accuracy_score

@@ -6,8 +6,8 @@ import program_synthesis as ps
 from sklearn.externals import joblib
 from tensorflow.examples.tutorials.mnist import input_data
 
-# 输出中间结果保存地址
-mirror_outputs_dir = 'mirror_outputs/'
+# 预测中间结果保存目录
+mirror_outputs_dir = 'predict/mirror_outputs/'
 
 
 def LL_predict(rootdir, input_np):
@@ -34,7 +34,7 @@ def generate_intermediate_results(inputs_np):
 
     modelpath = os.path.join(ps.LL_models_dir_name, 'output_layer')
     cur_layer_np = LL_predict(modelpath, cur_layer_np)
-    np.savetxt(os.path.join(mirror_outputs_dir,'final_outputs.txt'), cur_layer_np, "%.8f", ',')
+    np.savetxt(os.path.join(mirror_outputs_dir,'final_outputs'), cur_layer_np, "%.8f", ',')
     return cur_layer_np
 
 
