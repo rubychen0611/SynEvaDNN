@@ -1,13 +1,13 @@
 import os
 import tensorflow as tf
 import numpy as np
-import gen_ML_model as ml
 import program_synthesis as ps
+import gen_ML_model as ml
 from sklearn.externals import joblib
 from tensorflow.examples.tutorials.mnist import input_data
 
 # 预测中间结果保存目录
-mirror_outputs_dir = 'predict/mirror_outputs/'
+mirror_outputs_dir = 'outputs/predict/mirror_outputs/'
 
 
 def LL_predict(rootdir, input_np):

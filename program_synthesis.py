@@ -11,7 +11,7 @@ from tensorflow.examples.tutorials.mnist import input_data
 # logic learners 使用的回归器
 LL_Regressor = svm.SVR
 # logic learners 存储路径
-LL_models_dir_name = 'LL_models/'
+LL_models_dir_name = 'outputs/LL_models/'
 
 # def load_image_set(mnist):
 #     X_train = np.vstack([img.reshape(-1, ) for img in mnist.train.images])

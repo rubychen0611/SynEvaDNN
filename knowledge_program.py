@@ -6,7 +6,7 @@ from tensorflow.examples.tutorials.mnist import input_data
 import gen_ML_model as ml
 
 # 预测中间结果保存目录
-knowledge_outputs_dir = 'predict/knowledge_outputs/'
+knowledge_outputs_dir = 'outputs/predict/knowledge_outputs/'
 
 def get_variables():
     '''

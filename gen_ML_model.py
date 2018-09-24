@@ -16,7 +16,7 @@ BATCH_SIZE = 20  # 每次batch打包的样本个数
 TRAINING_STEPS = 5000 # 训练轮数
 
 # 模型保存的路径和文件名
-MODEL_SAVE_PATH = "model/"
+MODEL_SAVE_PATH = "outputs/model/"
 MODEL_NAME = "model.ckpt"
 
 
